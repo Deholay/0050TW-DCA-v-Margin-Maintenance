@@ -1,0 +1,14 @@
+{
+  "start": "2020-01-01",
+  "end": "2026-10-14",
+  "monthly_deposit": 10000,
+  "total_contributions": 820000,
+  "parameter_selection": "Unchanged 2016\u20132019 training selection",
+  "account_reset": false,
+  "episode_reset_at_2024": false,
+  "sales": false,
+  "leverage": false,
+  "new_target_deposit_rule": false,
+  "grid_role": "Original 48 configurations, diagnostics only; no reselection",
+  "validation": "Eight selected/baseline prefixes match prior 2020\u20132023 run; independent DCA terminal wealth identity passes"
+}

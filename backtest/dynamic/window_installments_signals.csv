@@ -1,0 +1,11 @@
+strategy,signal_date,cash,window,status
+window_installments,2024-04-22,140000.0,15,opened
+window_installments,2024-07-26,30000.000000000007,23,opened
+window_installments,2024-08-02,33478.260869565216,19,ignored_active
+window_installments,2024-09-10,19999.999999999996,8,opened
+window_installments,2025-01-13,40000.0,25,opened
+window_installments,2025-03-25,20000.0,21,opened
+window_installments,2025-03-28,17142.857142857138,21,ignored_active
+window_installments,2025-04-07,23333.33333333332,16,ignored_active
+window_installments,2026-07-20,160000.0,5,opened
+window_installments,2026-07-28,0.0,5,no_cash

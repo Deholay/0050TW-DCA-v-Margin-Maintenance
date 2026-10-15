@@ -1,0 +1,17 @@
+{
+  "frozen_before_results": true,
+  "train": ["2016-01-01", "2019-12-31"],
+  "tests": [["2020-01-01", "2023-12-31"], ["2024-01-01", "2026-10-14"]],
+  "percentile": {"p0": [0.1, 0.2], "a": [0.05, 0.1, 0.2], "r": [1, 2]},
+  "depth": {"a": [0.05, 0.1, 0.2], "h": [0.25, 0.5, 1]},
+  "target": {"h": [0.25, 0.5, 1]},
+  "gates": [false, true],
+  "lookback": 252,
+  "epsilon_percentage_points": 0.000001,
+  "monthly_deposit": 10000,
+  "fee": 0.001425,
+  "selection": "Within each family/gate choose highest training terminal NAV among MDD no worse than DCA. Exact ties sorted by policy ID. If none feasible choose smallest drawdown and mark infeasible. Freeze before tests. No requirement to beat DCA to return a candidate; report failure explicitly.",
+  "episode": "Start on first d>0 while inactive; end at m>=prior q50. Freeze current cash K at start, D=actual cost-inclusive spending. Episode independent of strict gate; gate only authorizes orders. New deposits cannot increase K, reserved for next episode. Existing shares never sold. If period begins within a historical low, start account's first episode on its first d>0 close.",
+  "execution": "Close signal, frozen cost-inclusive amount at next tradable ETF open; outstanding order survives ETF suspension and prevents another order until filled. Monthly deposit before first tradable monthly open. All series prior-only except contemporaneous observed m. Daily-close TWR MDD with external flows split at open.",
+  "limits": "Exploratory chronological holdout, not unseen research: later market periods already inspected. Fresh account and episode state per period; no carry from training. All tests and all neighbors disclosed. No sales, leverage, core DCA, expected-return estimate or MPC. Fractional adjusted total-return units, no cash yield or minimum fee/spread."
+}

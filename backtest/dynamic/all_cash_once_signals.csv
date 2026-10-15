@@ -1,0 +1,11 @@
+strategy,signal_date,cash,window,status
+all_cash_once,2024-04-22,140000.0,15,opened
+all_cash_once,2024-07-26,30000.0,23,opened
+all_cash_once,2024-08-02,10000.0,19,opened
+all_cash_once,2024-09-10,10000.0,8,opened
+all_cash_once,2025-01-13,40000.0,25,opened
+all_cash_once,2025-03-25,20000.0,21,opened
+all_cash_once,2025-03-28,0.0,21,no_cash
+all_cash_once,2025-04-07,10000.0,16,opened
+all_cash_once,2026-07-20,150000.0,5,opened
+all_cash_once,2026-07-28,0.0,5,no_cash

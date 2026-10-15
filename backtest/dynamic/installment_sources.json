@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "window-installments",
+      "title": "進入動態 window 後按當時現金分批買入",
+      "queries": [
+        {
+          "id": "installments",
+          "source": {
+            "label": "愛玩股、Yahoo Finance、證交所與元大公告",
+            "links": [
+              {
+                "label": "歷史維持率",
+                "href": "https://www.istock.tw/post/twmarginrequirement_more"
+              },
+              {
+                "label": "0050歷史行情",
+                "href": "https://finance.yahoo.com/quote/0050.TW/history/"
+              },
+              {
+                "label": "0050分割說明",
+                "href": "https://www.yuantafunds.com/active/ETF0050/index.html"
+              }
+            ],
+            "filters": [
+              "同一動態diff訊號與低水準條件；2023年3月起每月入金1萬元",
+              "觸發收盤鎖定現金C、動態window天數W；次日起連續W個可交易日，每日買C/W",
+              "期間不疊加計畫，新入金保留至下輪；無10萬元總額上限"
+            ],
+            "caveats": [
+              "上市含ETF第三方歷史維持率，並非全期官方逐股驗證。",
+              "總報酬等值單位含分割及配息；買入費率0.1425%，不計最低費、零股價差及個人股息稅。",
+              "同樣本探索；window原為回看期，將它當作未來投入期是本輪新增策略假設。",
+              "XIRR與回撤均包含現金；入金44萬元，期末持有不賣出。"
+            ]
+          },
+          "reportingPeriod": "2023-03-01～2026-10-14（前段資料只暖機）",
+          "columns": [
+            "strategy",
+            "buy_days",
+            "spent",
+            "cash",
+            "nav",
+            "xirr_pct",
+            "mdd_pct"
+          ],
+          "rows": [
+            {
+              "strategy": "all_cash_once",
+              "buy_days": 8,
+              "spent": 410000.0,
+              "cash": 30000.0,
+              "nav": 944516.423208862,
+              "xirr_pct": 45.62427608410993,
+              "mdd_pct": -26.701302472816774
+            },
+            {
+              "strategy": "window_installments",
+              "buy_days": 97,
+              "spent": 409999.9999999997,
+              "cash": 30000.0,
+              "nav": 906516.9006867562,
+              "xirr_pct": 42.96017331443569,
+              "mdd_pct": -25.414497683978965
+            },
+            {
+              "strategy": "DCA",
+              "buy_days": 44,
+              "spent": 440000.0,
+              "cash": 0.0,
+              "nav": 1142311.6697028473,
+              "xirr_pct": 58.31486856179497,
+              "mdd_pct": -27.3637570633807
+            },
+            {
+              "strategy": "dynamic_up_to_100k",
+              "buy_days": 9,
+              "spent": 410000.0,
+              "cash": 30000.0,
+              "nav": 925500.6249725386,
+              "xirr_pct": 44.30146275663326,
+              "mdd_pct": -26.68141094080927
+            }
+          ],
+          "methods": [
+            {
+              "language": "python",
+              "code": "\"\"\"Freeze cash and horizon at signal close; spend over the next W tradable opens.\"\"\"\nfrom pathlib import Path\nimport pandas as pd\nimport numpy as np\nimport run_dynamic as bt\nfrom run_backtest import FEE,xirr\nR=Path(__file__).resolve().parent\n\ndef simulate_installments(p,f,mode):\n    triggers=set(bt.event_dates(f,'dynamic'))\n    cash=units=contributed=spent=0.;month=None;previous=0.;twr=1.;active=None\n    flows=[];daily=[];trades=[];campaigns=[];signals=[]\n    for date,r in p.loc[bt.START:bt.END].iterrows():\n        inflow=0.\n        if r.tradable and month!=date.to_period('M'):\n            inflow=10000.;cash+=inflow;contributed+=inflow;flows.append((date,-inflow));month=date.to_period('M')\n        if active is not None and r.tradable:\n            a=active\n            amount=a['budget']-a['spent'] if a['remaining']==1 else a['daily_amount']\n            assert amount>0 and cash+1e-6>=amount and date>a['signal_date']\n            new_units=amount/(1+FEE)/r.adjusted_open\n            units+=new_units;cash-=amount;spent+=amount;a['spent']+=amount;a['remaining']-=1\n            a['last_buy_date']=date\n            if pd.isna(a['first_buy_date']):a['first_buy_date']=date\n            trades.append(dict(strategy=mode,campaign=a['campaign'],signal_date=a['signal_date'],date=date,amount=amount,adjusted_open=r.adjusted_open,units=new_units,fee=amount-amount/(1+FEE)))\n            if a['remaining']==0:\n                assert np.isclose(a['spent'],a['budget'])\n                active=None\n        # New information is only observed after the day's open transactions.\n        if date in triggers:\n            status='ignored_active' if active is not None else 'no_cash' if cash<1e-6 else 'opened'\n            signals.append(dict(strategy=mode,signal_date=date,cash=cash,window=int(f.loc[date,'window']),status=status))\n            if status=='opened':\n                horizon=int(f.loc[date,'window']) if mode=='window_installments' else 1\n                active=dict(campaign=len(campaigns)+1,signal_date=date,window_at_signal=int(f.loc[date,'window']),horizon=horizon,budget=cash,daily_amount=cash/horizon,spent=0.,remaining=horizon,first_buy_date=pd.NaT,last_buy_date=pd.NaT)\n                campaigns.append(active)\n        nav=cash+units*r.adjusted_close\n        if previous+inflow:twr*=nav/(previous+inflow)\n        daily.append(dict(date=date,strategy=mode,cash=cash,fund=units*r.adjusted_close,nav=nav,contributions=contributed,twr=twr))\n        previous=nav\n        assert cash>=-1e-6 and np.isclose(cash+spent,contributed)\n    d=pd.DataFrame(daily);t=pd.DataFrame(trades);c=pd.DataFrame(campaigns);s=pd.DataFrame(signals)\n    assert np.isclose(t.units.sum()*p.adjusted_close.iloc[-1],d.fund.iloc[-1])\n    assert np.isclose(t.amount.sum(),spent)\n    assert len(s)==10\n    for a in campaigns:\n        tr=t[t.campaign==a['campaign']]\n        expected=p.index[(p.index>a['signal_date'])&p.tradable][:a['horizon']]\n        assert list(tr.date)==list(expected)\n    result=dict(strategy=mode,signals=len(s),campaigns=len(c),buy_days=len(t),ignored_active=(s.status=='ignored_active').sum(),no_cash=(s.status=='no_cash').sum(),contributions=contributed,spent=spent,cash=cash,nav=nav,xirr_pct=100*xirr(flows+[(bt.END,nav)]),mdd_pct=100*(d.twr/d.twr.cummax()-1).min(),mean_cash_pct=100*(d.cash/d.nav).mean(),unfinished_campaigns=int((c.remaining>0).sum()))\n    return result,d,t,c,s\n\ndef main():\n    p,m=bt.load();f=bt.features(m)\n    summaries=[]\n    for mode in ['all_cash_once','window_installments']:\n        result,d,t,c,s=simulate_installments(p,f,mode)\n        summaries.append(result)\n        for name,table in [('daily',d),('trades',t),('campaigns',c),('signals',s)]:table.to_csv(R/f'{mode}_{name}.csv',index=False)\n    prior=pd.read_csv(R/'cash_rule_summary.csv')\n    for name,select in [('DCA',prior.strategy=='DCA'),('dynamic_up_to_100k',(prior.strategy=='dynamic')&(prior.cash_rule=='up_to_100k'))]:\n        row=prior.loc[select].iloc[0].to_dict();row['strategy']=name;row['buy_days']=row.pop('buys');summaries.append(row)\n    summary=pd.DataFrame(summaries);summary.to_csv(R/'installment_summary.csv',index=False)\n    print(summary[['strategy','signals','buy_days','spent','cash','nav','xirr_pct','mdd_pct']].round(3).to_string(index=False))\n    print('\\nCampaigns:');print(pd.read_csv(R/'window_installments_campaigns.csv').to_string(index=False))\n    print('\\nSignals:');print(pd.read_csv(R/'window_installments_signals.csv').to_string(index=False))\n    return summary\nif __name__=='__main__':main()\n"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

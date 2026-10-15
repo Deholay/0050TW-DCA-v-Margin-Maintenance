@@ -1,0 +1,9 @@
+id,prefix_matches_2020_2023
+kappa2,True
+percentile_strict_p00.2_a0.2_r1,True
+percentile_open_p00.2_a0.2_r1,True
+depth_strict_a0.2_h0.25,True
+DCA,True
+target_open_h0.25,True
+depth_open_a0.2_h0.25,True
+target_strict_h0.25,True

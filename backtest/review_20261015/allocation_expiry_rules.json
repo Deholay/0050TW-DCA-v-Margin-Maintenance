@@ -1,0 +1,11 @@
+{
+  "rules": "Single prespecified 3-calendar-month expiry extension; no parameter search.\n\nUse exactly allocation_study's 2023-03-01..2026-10-14 prices, daily low-state\nsignals, monthly TWD 10,000 deposits, adjusted total-return units, zero cash\nyield, and proportional 0.1425% buy fee. No selling, borrowing, or leverage.\nFor each month's reserve tranche, expiry is the FIRST TRADABLE DAY of the\ndeposit month + 3 calendar months (March tranche expires at June's first\ntradable open). Low signals execute at the next tradable open, sweeping all\nunspent tranches. Otherwise expiring tranches buy at their scheduled open.\nAn expiry purchase is a known calendar order and does not depend on that\nday's closing information. The monthly DCA component buys at deposit open.\n\nOnly two variants are added: 80% DCA / 20% reserve with 3-month expiry, and\n100% reserve with the same expiry. No alternate expiry horizon is evaluated.\nThe second variant tests the waiting mechanism and permits independent daily\n80/20 accounting reconstruction: 80% of DCA + 20% of all-reserve expiry.\nNAV/cash/fund/units are linear; XIRR, TWR and MDD need not be linear.\n",
+  "only_expiry_horizon_months": 3,
+  "optimization": false,
+  "source_sha256": {
+    "review_20261015/allocation_expiry.py": "c2ec9723de25fbc98e5618e09a5bf2b14b7bce5851a2e203ec7139c5f651e7d6",
+    "review_20261015/allocation_study.py": "063d2986290fbab0f78b45882665d6e05e28e057bb949a8ff004a7cf87ecebb4",
+    "prices_reviewed.csv": "69a23b410ff170b1b315c0be309a2a5bcf44a8abbf418387ee8a976ee82aa3c8",
+    "margin_daily.csv": "c1d3ccd35f8be891bb3afe5a508dab98a04bf9bf02008a975895603f4fbf4799"
+  }
+}

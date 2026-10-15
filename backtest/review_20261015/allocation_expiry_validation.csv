@@ -1,0 +1,7 @@
+check,metric,max_absolute_difference,tolerance,passed
+80pct_DCA_plus_20pct_all_reserve,cash,0.0,1e-08,True
+80pct_DCA_plus_20pct_all_reserve,fund,9.313225746154785e-10,1e-08,True
+80pct_DCA_plus_20pct_all_reserve,nav,9.313225746154785e-10,1e-08,True
+80pct_DCA_plus_20pct_all_reserve,contributions,0.0,1e-08,True
+80pct_DCA_plus_20pct_all_reserve,spent,0.0,1e-08,True
+80pct_DCA_plus_20pct_all_reserve,normalized_units,7.275957614183426e-12,1e-08,True

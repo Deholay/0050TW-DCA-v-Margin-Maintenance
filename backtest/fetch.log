@@ -1,0 +1,43 @@
+START 4107 days 20100104 20261014
+PROGRESS 100 / 4107 date 20100602 elapsed 0
+ERROR 20100825 ['prices:Expecting value: line 1 column 1 (char 0)']
+ERROR 20100827 ['prices:Expecting value: line 1 column 1 (char 0)']
+ERROR 20100831 ['prices:Expecting value: line 1 column 1 (char 0)']
+ERROR 20100901 ['margin:Expecting value: line 1 column 1 (char 0)', 'prices:Expecting value: line 1 column 1 (char 0)']
+ERROR 20100902 ['margin:Expecting value: line 1 column 1 (char 0)', 'prices:Expecting value: line 1 column 1 (char 0)']
+ERROR 20100903 ['margin:Expecting value: line 1 column 1 (char 0)', 'prices:Expecting value: line 1 column 1 (char 0)']
+ERROR 20100906 ['margin:Expecting value: line 1 column 1 (char 0)', 'prices:Expecting value: line 1 column 1 (char 0)']
+ERROR 20100907 ['margin:Expecting value: line 1 column 1 (char 0)', 'prices:Expecting value: line 1 column 1 (char 0)']
+ERROR 20100908 ['margin:Expecting value: line 1 column 1 (char 0)', 'prices:Expecting value: line 1 column 1 (char 0)']
+ERROR 20100909 ['margin:Expecting value: line 1 column 1 (char 0)', 'prices:Expecting value: line 1 column 1 (char 0)']
+ERROR 20100910 ['margin:Expecting value: line 1 column 1 (char 0)', 'prices:Expecting value: line 1 column 1 (char 0)']
+ERROR 20100913 ['margin:Expecting value: line 1 column 1 (char 0)', 'prices:Expecting value: line 1 column 1 (char 0)']
+ERROR 20100914 ['margin:Expecting value: line 1 column 1 (char 0)', 'prices:Expecting value: line 1 column 1 (char 0)']
+ERROR 20100915 ['margin:Expecting value: line 1 column 1 (char 0)', 'prices:Expecting value: line 1 column 1 (char 0)']
+ERROR 20100916 ['margin:Expecting value: line 1 column 1 (char 0)', 'prices:Expecting value: line 1 column 1 (char 0)']
+ERROR 20100917 ['margin:Expecting value: line 1 column 1 (char 0)', 'prices:Expecting value: line 1 column 1 (char 0)']
+ERROR 20100920 ['margin:Expecting value: line 1 column 1 (char 0)', 'prices:Expecting value: line 1 column 1 (char 0)']
+curl: (56) The requested URL returned error: 428
+curl: (56) The requested URL returned error: 428
+curl: (56) The requested URL returned error: 428
+curl: (56) The requested URL returned error: 428
+curl: (56) The requested URL returned error: 428
+curl: (56) The requested URL returned error: 428
+curl: (56) The requested URL returned error: 428
+Traceback (most recent call last):
+  File "/Users/fuchienzou/Documents/ChatGPT/margin-maintain-strategy/backtest/fetch_history.py", line 32, in <module>
+    for i,(day,errors) in enumerate(pool.map(fetch,dates),1):
+                          ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 639, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 311, in _result_or_cancel
+    return fut.result(timeout)
+           ~~~~~~~~~~^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/concurrent/futures/_base.py", line 445, in result
+    self._condition.wait(timeout)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/threading.py", line 369, in wait
+    waiter.acquire()
+    ~~~~~~~~~~~~~~^^
+KeyboardInterrupt

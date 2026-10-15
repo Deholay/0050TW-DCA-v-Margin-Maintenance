@@ -1,0 +1,17 @@
+{
+  "main_strategy": "pure_dynamic_buy_only",
+  "core_fraction": 0,
+  "exits_enabled": false,
+  "monthly_deposit": 10000,
+  "tau": 20,
+  "signal_and_sizing_unchanged": true,
+  "verified": [
+    "No sell trades",
+    "All core holdings zero",
+    "Sale proceeds and sale tax zero",
+    "Cash = contributed principal - buy spending",
+    "Daily results reproduce earlier buy-only diagnostic after CSV empty-string normalization"
+  ],
+  "data_caveat": "2020–2023 FinLab TWSE+TPEx; 2023–2026 iStock TWSE. Historical exploratory tests, overlapping in 2023.",
+  "costs": "Buy fee 0.1425%, adjusted fractional total-return units, cash yield zero, no minimum fee or spread"
+}

@@ -1,0 +1,35 @@
+{
+  "rules": "Prespecified symmetric dynamic-window exit for the 20% tactical sleeve.\n\n2023-03-01..2026-10-14, monthly external deposits TWD 10,000 at the first\ntradable open. Core receives 80% and buys monthly forever; tactical receives\n20% and retains all sale proceeds. These are contribution weights, not NAV\ntargets. No borrowing, no parameter search, zero cash yield.\n\nUse the ORIGINAL dynamic entry: ratio < prior-252-day q10 AND\nratio[t]-ratio[t-W] < -10 percentage points. Symmetric exit: ratio > prior\n252-day q90 AND the same difference > +10pp. Both trigger only on false to\ntrue transitions. W uses run_dynamic.features unchanged: round(20 *\n(prior sigma-reference / prior sigma)^2), clipped to 5..60.\n\nAt signal CLOSE, freeze W and all tactical cash (buy) or all tactical\ntotal-return equivalent units (sell). Execute equal cash/units at the next W\ntradable OPENS. An active campaign is never cancelled or resized. Ignore\nnew signals during an active campaign; after its last fill, that day's\nclosing signal may open the next. New monthly money waits outside the\nfrozen budget. No expiry rule is added.\n\nBuy and sell fees 0.1425% each, sell ETF tax 0.1%. Fractional adjusted-price\nunits idealize dividend reinvestment and stock splits, as in prior studies;\nfrozen equivalent units are not literally frozen broker share counts across\ndividends. No minimum fee, bid/ask spread, market impact, or investor tax.\nCash is TRADE-DATE economic cash (including sale receivables), not a bank\nbalance. No simultaneous buy/sell campaigns: any reinvested sale precedes\nthe purchase, hence its settlement precedes that purchase's settlement.\nBroker prepayment/order limits and the settlement calendar are not modeled.\n\nCompare DCA, 80/20 window buy-only, and the identical rule plus symmetric\nwindow exits. A full tactical account verifies linear sleeve accounting;\nit is a diagnostic, not a selected fourth candidate. TWR splits deposit\ndates at the open, marking yesterday's holdings at that open before adding\nthe external flow. MDD uses daily-close TWR including initial index 1.\nThe earlier start-of-day approximation is retained as twr_legacy for audit.\nNested year-end results are not out-of-sample validation.\n",
+  "policies": [
+    [
+      "DCA_100",
+      1.0,
+      false
+    ],
+    [
+      "DCA_80_window_buy_only",
+      0.8,
+      false
+    ],
+    [
+      "DCA_80_window_roundtrip",
+      0.8,
+      true
+    ],
+    [
+      "diagnostic_tactical_100",
+      0.0,
+      true
+    ]
+  ],
+  "parameter_search": false,
+  "source_sha256": {
+    "review_20261015/window_roundtrip.py": "a7c0eaf56dbde0344767a7c085c48256f25fee814b716543686d11ae30d6b8dc",
+    "review_20261015/allocation_study.py": "063d2986290fbab0f78b45882665d6e05e28e057bb949a8ff004a7cf87ecebb4",
+    "dynamic/run_dynamic.py": "16eed424a764d9bb9ecead2e864d22d50e3c0dafc017d94a21cd772acb241f47",
+    "prices_reviewed.csv": "69a23b410ff170b1b315c0be309a2a5bcf44a8abbf418387ee8a976ee82aa3c8",
+    "margin_daily.csv": "c1d3ccd35f8be891bb3afe5a508dab98a04bf9bf02008a975895603f4fbf4799"
+  },
+  "sell_tax_source": "https://www.twse.com.tw/zh/products/securities/etf/overview/rules.html",
+  "settlement_source": "https://www.twse.com.tw/zh/products/system/trading.html"
+}

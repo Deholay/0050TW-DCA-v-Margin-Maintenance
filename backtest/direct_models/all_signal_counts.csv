@@ -1,0 +1,8 @@
+model,id,order_days,buy_days,buy_spent
+②寬,depth_open_a0.2_h0.25,382,382,733402.363961631
+②嚴,depth_strict_a0.2_h0.25,85,85,708849.7420973701
+①寬,percentile_open_p00.2_a0.2_r1,382,382,747211.5734686329
+①嚴,percentile_strict_p00.2_a0.2_r1,85,85,727007.1803731944
+③寬,target_open_h0.25,70,70,779143.2091383084
+③嚴,target_strict_h0.25,42,42,779142.116875133
+原式,kappa2,85,85,674464.9231373578

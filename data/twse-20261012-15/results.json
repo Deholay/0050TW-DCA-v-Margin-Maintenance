@@ -1,0 +1,124 @@
+[
+  {
+    "date": "20261012",
+    "status": "partial_valuation",
+    "official_debt_twd": "653329500000",
+    "debt_change_twd": "6923733000",
+    "official_debt_100m_twd": "6533.295",
+    "covered_market_value_twd": "1281594347040.00",
+    "covered_value_ratio_pct_lower_bound": "196.1635510167534146246266241",
+    "total_lots": 9453100,
+    "covered_lots_pct": "99.98816261332261374575536068",
+    "missing_closes": [
+      {
+        "code": "1589",
+        "name": "永冠-KY",
+        "lots": 467,
+        "close": null
+      },
+      {
+        "code": "4155",
+        "name": "訊映",
+        "lots": 624,
+        "close": null
+      },
+      {
+        "code": "8443",
+        "name": "阿瘦",
+        "lots": 28,
+        "close": null
+      }
+    ]
+  },
+  {
+    "date": "20261013",
+    "status": "partial_valuation",
+    "official_debt_twd": "644978625000",
+    "debt_change_twd": "-8350875000",
+    "official_debt_100m_twd": "6449.78625",
+    "covered_market_value_twd": "1225088323290.00",
+    "covered_value_ratio_pct_lower_bound": "189.9424687585576963887756745",
+    "total_lots": 9430485,
+    "covered_lots_pct": "99.98566351571525748675704378",
+    "missing_closes": [
+      {
+        "code": "00666R",
+        "name": "富邦恒生國企反1",
+        "lots": 247,
+        "close": null
+      },
+      {
+        "code": "00682U",
+        "name": "期元大美元指數",
+        "lots": 3,
+        "close": null
+      },
+      {
+        "code": "1589",
+        "name": "永冠-KY",
+        "lots": 463,
+        "close": null
+      },
+      {
+        "code": "4155",
+        "name": "訊映",
+        "lots": 623,
+        "close": null
+      },
+      {
+        "code": "5906",
+        "name": "台南-KY",
+        "lots": 16,
+        "close": null
+      }
+    ]
+  },
+  {
+    "date": "20261014",
+    "status": "partial_valuation",
+    "official_debt_twd": "651567390000",
+    "debt_change_twd": "6588765000",
+    "official_debt_100m_twd": "6515.6739",
+    "covered_market_value_twd": "1248482819510.00",
+    "covered_value_ratio_pct_lower_bound": "191.6122320839291849765532311",
+    "total_lots": 9467251,
+    "covered_lots_pct": "99.98839156160536992206079674",
+    "missing_closes": [
+      {
+        "code": "00682U",
+        "name": "期元大美元指數",
+        "lots": 3,
+        "close": null
+      },
+      {
+        "code": "1423",
+        "name": "利華",
+        "lots": 87,
+        "close": null
+      },
+      {
+        "code": "1589",
+        "name": "永冠-KY",
+        "lots": 370,
+        "close": null
+      },
+      {
+        "code": "4155",
+        "name": "訊映",
+        "lots": 623,
+        "close": null
+      },
+      {
+        "code": "5906",
+        "name": "台南-KY",
+        "lots": 16,
+        "close": null
+      }
+    ]
+  },
+  {
+    "date": "20261015",
+    "status": "unavailable",
+    "source_status": "很抱歉，沒有符合條件的資料"
+  }
+]

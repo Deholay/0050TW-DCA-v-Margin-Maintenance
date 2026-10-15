@@ -1,0 +1,79 @@
+{
+  "rows": 3118,
+  "repairs": [
+    {
+      "date": "2014-12-27",
+      "source": "twse-0050-201412.json",
+      "adjustment_factor": 0.7002347603267792,
+      "neighbor_factor_difference": 7.063103457660702e-08
+    },
+    {
+      "date": "2016-01-30",
+      "source": "twse-0050-201601.json",
+      "adjustment_factor": 0.7221513521873345,
+      "neighbor_factor_difference": 3.831161610179379e-09
+    },
+    {
+      "date": "2016-06-04",
+      "source": "twse-0050-201606.json",
+      "adjustment_factor": 0.7221513650403091,
+      "neighbor_factor_difference": 8.314723776159383e-08
+    },
+    {
+      "date": "2016-09-10",
+      "source": "twse-0050-201609.json",
+      "adjustment_factor": 0.7310667746486063,
+      "neighbor_factor_difference": 5.4084059897263614e-08
+    },
+    {
+      "date": "2017-02-18",
+      "source": "twse-0050-201702.json",
+      "adjustment_factor": 0.7484244285833009,
+      "neighbor_factor_difference": 1.4316082352916482e-07
+    },
+    {
+      "date": "2017-06-03",
+      "source": "twse-0050-201706.json",
+      "adjustment_factor": 0.748424510201746,
+      "neighbor_factor_difference": 6.873392599526795e-08
+    },
+    {
+      "date": "2017-09-30",
+      "source": "twse-0050-201709.json",
+      "adjustment_factor": 0.7548606053359218,
+      "neighbor_factor_difference": 2.1072005695899065e-08
+    },
+    {
+      "date": "2018-03-31",
+      "source": "twse-0050-201803.json",
+      "adjustment_factor": 0.7743293200353798,
+      "neighbor_factor_difference": 1.4662495451123192e-07
+    },
+    {
+      "date": "2018-12-22",
+      "source": "twse-0050-201812.json",
+      "adjustment_factor": 0.780786028548952,
+      "neighbor_factor_difference": 4.155140176376193e-08
+    },
+    {
+      "date": "2019-09-09",
+      "source": "twse-0050-201909.json",
+      "adjustment_factor": 0.8118601359293133,
+      "neighbor_factor_difference": 8.683223928773742e-08
+    },
+    {
+      "date": "2024-01-15",
+      "source": "twse-0050-202401.json",
+      "adjustment_factor": 0.9333463509464129,
+      "neighbor_factor_difference": 2.4750692939612406e-08
+    }
+  ],
+  "official_monthly_checks": 222,
+  "max_error": 1.5258789076710855e-06,
+  "signal_source": "finlab margin_transactions/margin_balance/price 估算; 維持率=Σ(融資今日餘額×收盤價×1000)/(上市+上櫃融資交易金額)",
+  "caveats": [
+    "FinLab combined TWSE+TPEx aggregate, not listed-only. Historical publication time and revisions are not independently archived.",
+    "Adjusted total-return fractional units, zero cash interest, fee 0.1425%; excludes minimum fee, spread and dividend tax.",
+    "Yahoo pre-2014 price scaling not used."
+  ]
+}

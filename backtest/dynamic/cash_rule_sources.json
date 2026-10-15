@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "cash-rule",
+      "title": "只放寬不足10萬元時的買入限制",
+      "queries": [
+        {
+          "id": "cash-rule-results",
+          "source": {
+            "label": "愛玩股、Yahoo Finance、證交所與元大公告",
+            "links": [
+              {
+                "label": "歷史維持率",
+                "href": "https://www.istock.tw/post/twmarginrequirement_more"
+              },
+              {
+                "label": "0050歷史行情",
+                "href": "https://finance.yahoo.com/quote/0050.TW/history/"
+              },
+              {
+                "label": "0050分割說明",
+                "href": "https://www.yuantafunds.com/active/ETF0050/index.html"
+              }
+            ],
+            "filters": [
+              "上市融資維持率，含 ETF",
+              "每月入金 1 萬元；訊號買入 10 萬元",
+              "盤後訊號，次一可交易日開盤買入",
+              "低水準：截至昨日252日第10百分位；每月入金1萬元，累計44萬元",
+              "固定20日diff<-10；標準化diff<-1.5；動態window=clip(20×(參考波動/近期波動)^2,5,60)",
+              "新規則：訊號時買min(10萬元,可用現金)，零現金跳過；不改訊號"
+            ],
+            "caveats": [
+              "只取得2021-11-03至2026-10-14連續1200日維持率，未完成2010年起長期樣本。",
+              "維持率來自第三方公開歷史彙整，僅本週三日與官方逐股計算抽查一致。",
+              "0050使用分割與股息調整價格，假設稅前股息立即再投入、可分割等值單位；未計滑價。",
+              "期末市值未假設賣出；XIRR包含每月入金及期末股票與現金。",
+              "所有滾動閾值與波動估計排除當日；次日開盤成交。",
+              "新舊版本現金路徑不同，不能把原版每次可用現金直接相加。",
+              "固定快照的同樣本探索；新規則回撤更大，仍落後本期定期定額。"
+            ]
+          },
+          "reportingPeriod": "2023-03-01～2026-10-14（前段資料只暖機）",
+          "columns": [
+            "strategy",
+            "cash_rule",
+            "buys",
+            "spent",
+            "cash",
+            "nav",
+            "xirr_pct",
+            "mdd_pct"
+          ],
+          "rows": [
+            {
+              "strategy": "DCA",
+              "cash_rule": "full_100k_required",
+              "buys": 44,
+              "spent": 440000.0,
+              "cash": 0.0,
+              "nav": 1142311.6697028473,
+              "xirr_pct": 58.31486856179497,
+              "mdd_pct": -27.3637570633807
+            },
+            {
+              "strategy": "fixed",
+              "cash_rule": "full_100k_required",
+              "buys": 4,
+              "spent": 400000.0,
+              "cash": 40000.0,
+              "nav": 830978.0733475629,
+              "xirr_pct": 37.401712124856914,
+              "mdd_pct": -20.44651098294653
+            },
+            {
+              "strategy": "fixed",
+              "cash_rule": "up_to_100k",
+              "buys": 7,
+              "spent": 410000.0,
+              "cash": 30000.0,
+              "nav": 924245.678768174,
+              "xirr_pct": 44.21344198864075,
+              "mdd_pct": -25.525222976272676
+            },
+            {
+              "strategy": "normalized",
+              "cash_rule": "full_100k_required",
+              "buys": 4,
+              "spent": 400000.0,
+              "cash": 40000.0,
+              "nav": 796736.7028291139,
+              "xirr_pct": 34.754593779465445,
+              "mdd_pct": -17.394999917639087
+            },
+            {
+              "strategy": "normalized",
+              "cash_rule": "up_to_100k",
+              "buys": 6,
+              "spent": 410000.0,
+              "cash": 30000.0,
+              "nav": 882147.406250547,
+              "xirr_pct": 41.20675398900413,
+              "mdd_pct": -24.62093338412259
+            },
+            {
+              "strategy": "dynamic",
+              "cash_rule": "full_100k_required",
+              "buys": 4,
+              "spent": 400000.0,
+              "cash": 40000.0,
+              "nav": 821306.1126363026,
+              "xirr_pct": 36.66255690886856,
+              "mdd_pct": -22.33459389642022
+            },
+            {
+              "strategy": "dynamic",
+              "cash_rule": "up_to_100k",
+              "buys": 9,
+              "spent": 410000.0,
+              "cash": 30000.0,
+              "nav": 925500.6249725386,
+              "xirr_pct": 44.30146275663326,
+              "mdd_pct": -26.68141094080927
+            }
+          ],
+          "methods": [
+            {
+              "language": "python",
+              "code": "from pathlib import Path\nimport pandas as pd\nimport numpy as np\nimport run_dynamic as bt\nR=Path(__file__).resolve().parent\np,m=bt.load();f=bt.features(m)\nold=pd.read_csv(R/'summary.csv').set_index('strategy')\nresults=[];trades=[];daily=[]\nfor kind in ['DCA','fixed','normalized','dynamic']:\n    dates=[] if kind=='DCA' else bt.event_dates(f,kind)\n    for partial in ([False] if kind=='DCA' else [False,True]):\n        r,d,e=bt.simulate(p,dates,kind,partial_cash=partial)\n        if not partial:\n            for col in ['nav','cash','buys','spent','xirr_pct','mdd_pct']:\n                assert np.isclose(r[col],old.loc[kind,col]),(kind,col)\n        r['cash_rule']='up_to_100k' if partial else 'full_100k_required'\n        d['cash_rule']=r['cash_rule'];e['cash_rule']=r['cash_rule']\n        assert r['contributions']==440000 and np.isclose(r['spent']+r['cash'],440000)\n        assert (e.amount<=100000).all() and (e.amount<=e.available_cash+1e-7).all()\n        results.append(r);trades.append(e);daily.append(d)\nsummary=pd.DataFrame(results)\nsummary.to_csv(R/'cash_rule_summary.csv',index=False)\npd.concat(trades).to_csv(R/'cash_rule_trades.csv',index=False)\npd.concat(daily).to_csv(R/'cash_rule_daily.csv',index=False)\nprint(summary[['strategy','cash_rule','signals','buys','skips','spent','cash','nav','xirr_pct','mdd_pct']].round(3).to_string(index=False))\nprint('\\nDynamic new trades:')\nprint(trades[-1].to_string(index=False))\n"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

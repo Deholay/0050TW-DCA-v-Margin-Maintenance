@@ -1,0 +1,47 @@
+{
+  "rules": "Fixed-rule cash-allocation comparison; local snapshots only, no optimization.\n\nPeriod: 2023-03-01 through 2026-10-14. Deposit TWD 10,000 on each month's\nfirst tradable ETF date. Contributions arrive before that day's open. Buy fee\n0.1425% is included in the cash spent; cash earns zero. No selling, borrowing,\nor leverage. Adjusted open/close represent fractional total-return units.\n\nLow condition on t: ratio[t] < quantile(ratio[t-252:t], 0.10), excluding t.\nDynamic condition adds the EXISTING dynamic_diff[t] < -10 percentage points;\nwindow = round(20 * (sigma_ref / sigma)^2), clipped to 5..60, with sigma and\nsigma_ref using only prior observations, exactly as in run_dynamic.features.\nConditions are STATES, not false-to-true crossings: every qualifying close\nschedules spending remaining cash at the next tradable open. If multiple\nsignals map to the same open (e.g. suspension), they produce one sweep.\n\nFive predeclared policies: 100% DCA; 80% DCA + low-condition cash sweep;\n80% DCA + dynamic-double-condition cash sweep; 0% DCA + low cash sweep;\n80% DCA + low sweep with reserve capped at TWD 30,000. For the capped policy,\nafter the monthly 80% buy, excess reserve is immediately bought at that same\nopen. Then any scheduled condition spends the rest. No parameter search.\n\nYear-end snapshots use the SAME 2023-03-01 start and are NOT out-of-sample.\nTWR assumes deposits at the start of each date, matching existing DCA.\nMDD is measured on TWR, not contribution-inflated NAV. The study retains all\nlimitations of the existing market-wide ratio and adjusted-price snapshots.\n",
+  "policies": [
+    [
+      "DCA_100",
+      1.0,
+      null,
+      null
+    ],
+    [
+      "DCA_80_low_sweep",
+      0.8,
+      "low",
+      null
+    ],
+    [
+      "DCA_80_dynamic_sweep",
+      0.8,
+      "dynamic",
+      null
+    ],
+    [
+      "Cash_100_low_sweep",
+      0.0,
+      "low",
+      null
+    ],
+    [
+      "DCA_80_low_cap30000",
+      0.8,
+      "low",
+      30000.0
+    ]
+  ],
+  "source_sha256": {
+    "prices_reviewed.csv": "69a23b410ff170b1b315c0be309a2a5bcf44a8abbf418387ee8a976ee82aa3c8",
+    "margin_daily.csv": "c1d3ccd35f8be891bb3afe5a508dab98a04bf9bf02008a975895603f4fbf4799",
+    "dynamic/run_dynamic.py": "16eed424a764d9bb9ecead2e864d22d50e3c0dafc017d94a21cd772acb241f47",
+    "dynamic/daily.csv": "826fa370733d7efb3df37385b28ea7654a66bf9c30505dec0f93147f6b5a74e9",
+    "dynamic/summary.csv": "5d0f39c7e73e959fc5850e94a951bc07719e5a5d2013713b4c92c9ed04c9d5e8"
+  },
+  "source_latest": "2026-10-14",
+  "network_calls": 0,
+  "parameter_optimization": false,
+  "conditional_execution": "next_tradable_open_after_each_qualifying_close",
+  "snapshot_interpretation": "same-start nested endpoints, not out-of-sample"
+}

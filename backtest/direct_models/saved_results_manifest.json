@@ -1,0 +1,55 @@
+{
+  "period": [
+    "2020-01-02",
+    "2026-10-14"
+  ],
+  "daily_rows": 1647,
+  "no_downsampling": true,
+  "rendered_with": {
+    "python": "3.14.3",
+    "pandas": "3.0.6",
+    "numpy": "2.5.4",
+    "matplotlib": "3.11.2"
+  },
+  "sources": {
+    "continuous_2020_2026_DCA_daily.csv": "3f1723253fb3d6ac581dd26ca6f1d6ccfdda762afcdf362a04d8aaab7ae9e2d9",
+    "continuous_2020_2026_depth_open_a0.2_h0.25_daily.csv": "da69bb563bda0539590c576ced863c5bd586f761a4b04653d01e8328a9fb4c0b",
+    "continuous_2020_2026_depth_open_a0.2_h0.25_orders.csv": "6309d68c6d6a9134b0d902e521d6fc43633ce414ecaef5834f54c62c57536421",
+    "continuous_2020_2026_depth_open_a0.2_h0.25_trades.csv": "0eee285b80f8c74fdc2d5069500a8f2da9102f3ce43ce93f091c84e952498585",
+    "continuous_2020_2026_depth_strict_a0.2_h0.25_daily.csv": "15f0fdc672bba3f41be493074f10445bd05173548a216f9806d6b849feb1249c",
+    "continuous_2020_2026_depth_strict_a0.2_h0.25_orders.csv": "2fb39ffadbc6e7748eaef72e96a6d7631b7c3dac5f0bb74408f0b0a64691f0d5",
+    "continuous_2020_2026_kappa2_daily.csv": "827694ed03032fb36ef4179e5b4f0f13f8e6c36067c7fab086add9586e0ea5c4",
+    "continuous_2020_2026_kappa2_orders.csv": "5df7a4841555d6b7d55e75c27a9290174d7c5257c53ee8ee91cd9d6fbabdcead",
+    "continuous_2020_2026_kappa2_trades.csv": "14fd3afe6fcdcfee1ba21eee153c4e8273dc04bdb174a74eeb121df0973d1c81",
+    "continuous_2020_2026_percentile_open_p00.2_a0.2_r1_daily.csv": "763e62d30154c5c85ddfb9ac8d9a575dfc61b623594dc9c263238b6a1dbb8574",
+    "continuous_2020_2026_percentile_open_p00.2_a0.2_r1_orders.csv": "935d0048ce5c64ae3e2bb013c30aa8093ac6fdffccd80d1b776a0f63e5186c13",
+    "continuous_2020_2026_percentile_strict_p00.2_a0.2_r1_daily.csv": "4239c0b54174a3769f3a97f1afba913782cc7a50886b2a71f101a1018c606924",
+    "continuous_2020_2026_percentile_strict_p00.2_a0.2_r1_orders.csv": "1764d45468b46d3283da554bfceaf1d1873538af2910b9642525f5a810c3c463",
+    "continuous_2020_2026_summary.csv": "b772a736d9e92556ecf4fd3fdfd0950e5edc6e6b93b2c28404010cc2aaf7667f",
+    "continuous_2020_2026_target_open_h0.25_daily.csv": "97d2cde3a069e0ae601c218aba5447523e8edbaa77c7c28ca07eb28eeefa5222",
+    "continuous_2020_2026_target_open_h0.25_orders.csv": "659a09ebfd6bbdb89cdcc386ee0dbe1bbd1dffeeb4e66754fd40077631c62eb8",
+    "continuous_2020_2026_target_open_h0.25_trades.csv": "1c2acd849ecdbe704a2753ef6a7bbca5a887dcfc38de71706a43771cab9fdf7e",
+    "continuous_2020_2026_target_strict_h0.25_daily.csv": "fd1463d08d8d67d5fbbf7dba4be39c7914713cef5a45f387882a9caad4ba5b20",
+    "continuous_2020_2026_target_strict_h0.25_orders.csv": "a2cfc819d8011c92256db0ed9bcd9f7eeb95969dc63930cb7dc973e307008b91",
+    "features.csv": "e82c551c499ca6f26e11dec88b1df7ebf56718d038db3873095e580424cfb179",
+    "prices.csv": "df8657bc44b89cda6dd30e146a92406aa12e1cc27994f9f41aa056159387462b"
+  },
+  "figures": {
+    "01-model-comparison.png": {
+      "bytes": 124162,
+      "sha256": "4c5918a12156e6e51e7646b758c38cd2643e4cd61ea1c1b06f0e899bd6bff280"
+    },
+    "02-account-paths.png": {
+      "bytes": 498556,
+      "sha256": "b22d5110050723369388765c8ede59af570e54cc454497a74a7193d1a8c7fd47"
+    },
+    "03-signal-inputs.png": {
+      "bytes": 918767,
+      "sha256": "533ec9b93ca3f5e24a5953f5d6c960e163f8edb9bb73a145f15fa4bc98544bef"
+    },
+    "04-cash-deployment.png": {
+      "bytes": 381157,
+      "sha256": "4e728509b38f33f4c10ecbb131aa69503f96f0fa6cc189cdca74155ad160f28b"
+    }
+  }
+}

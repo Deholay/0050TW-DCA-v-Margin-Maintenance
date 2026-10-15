@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "margin-backtest",
+      "title": "0050低維持率買入與定期定額初步比較",
+      "queries": [
+        {
+          "id": "strategy-results",
+          "source": {
+            "label": "愛玩股、Yahoo Finance、證交所與元大公告",
+            "links": [
+              {
+                "label": "歷史維持率",
+                "href": "https://www.istock.tw/post/twmarginrequirement_more"
+              },
+              {
+                "label": "0050歷史行情",
+                "href": "https://finance.yahoo.com/quote/0050.TW/history/"
+              },
+              {
+                "label": "0050分割說明",
+                "href": "https://www.yuantafunds.com/active/ETF0050/index.html"
+              }
+            ],
+            "filters": [
+              "上市融資維持率，含 ETF",
+              "每月入金 1 萬元；訊號買入 10 萬元",
+              "盤後訊號，次一可交易日開盤買入"
+            ],
+            "caveats": [
+              "只取得2021-11-03至2026-10-14連續1200日維持率，未完成2010年起長期樣本。",
+              "維持率來自第三方公開歷史彙整，僅本週三日與官方逐股計算抽查一致。",
+              "0050使用分割與股息調整價格，假設稅前股息立即再投入、可分割等值單位；未計滑價。",
+              "現金不足10萬元時跳過訊號，現金基準利率0%，買入費率假設0.1425%。",
+              "期末市值未假設賣出；XIRR包含每月入金及期末股票與現金。"
+            ]
+          },
+          "reportingPeriod": "2021-11-03～2026-10-14",
+          "columns": [
+            "strategy",
+            "signals",
+            "buys",
+            "ending_nav",
+            "ending_cash",
+            "portfolio_xirr_pct",
+            "flow_adjusted_mdd_pct"
+          ],
+          "rows": [
+            {
+              "strategy": "DCA",
+              "signals": 60,
+              "buys": 60,
+              "ending_nav": 1802143.3722614597,
+              "ending_cash": 0.0,
+              "portfolio_xirr_pct": 46.5474783166,
+              "flow_adjusted_mdd_pct": -33.7681087097
+            },
+            {
+              "strategy": "Below 130%",
+              "signals": 0,
+              "buys": 0,
+              "ending_nav": 600000.0,
+              "ending_cash": 600000.0,
+              "portfolio_xirr_pct": 0.0,
+              "flow_adjusted_mdd_pct": 0.0
+            },
+            {
+              "strategy": "Below 140%",
+              "signals": 6,
+              "buys": 2,
+              "ending_nav": 1178016.634593448,
+              "ending_cash": 400000.0,
+              "portfolio_xirr_pct": 27.871046601,
+              "flow_adjusted_mdd_pct": -11.5111308963
+            },
+            {
+              "strategy": "Below 150%",
+              "signals": 11,
+              "buys": 4,
+              "ending_nav": 1486088.7184268576,
+              "ending_cash": 200000.0,
+              "portfolio_xirr_pct": 37.9473375094,
+              "flow_adjusted_mdd_pct": -19.9010151523
+            },
+            {
+              "strategy": "Below 160%",
+              "signals": 27,
+              "buys": 5,
+              "ending_nav": 1578701.4958801833,
+              "ending_cash": 100000.0,
+              "portfolio_xirr_pct": 40.6192891163,
+              "flow_adjusted_mdd_pct": -26.3440109443
+            }
+          ],
+          "methods": [
+            {
+              "language": "python",
+              "code": "def xirr(flows):\n    if not flows or not any(v<0 for d,v in flows) or not any(v>0 for d,v in flows): return np.nan\n    t0=flows[0][0]; t=np.array([(d-t0).days/365.25 for d,v in flows]); v=np.array([v for d,v in flows])\n    f=lambda rate: np.sum(v/np.power(1+rate,t))\n    return brentq(f,-.9999,100)\n\ndef simulate(prices,signals,threshold=None,ticket=100000,cash_rate=0):\n    label='DCA' if threshold is None else f'Below {threshold}%'\n    schedule={r.execution_date:r for r in signals.itertuples() if r.threshold==threshold}\n    cash=units=contributed=spent=0.; last_month=None; last_date=None; nav_before=0.; twr=1.\n    daily=[];trades=[];skips=[];flows=[];purchaseflows=[]\n    for date,r in prices.iterrows():\n        if last_date is not None:cash*= (1+cash_rate)**((date-last_date).days/365.25)\n        inflow=0.\n        if date.to_period('M')!=last_month:\n            inflow=DEPOSIT;cash+=inflow;contributed+=inflow;flows.append((date,-inflow));last_month=date.to_period('M')\n        if threshold is None and inflow and r.tradable:\n            amount=DEPOSIT\n        elif threshold is not None and date in schedule:\n            if cash+1e-7<ticket:\n                skips.append({'strategy':label,'date':date,'available_cash':cash,'required':ticket});amount=0.\n            else:amount=ticket\n        else:amount=0.\n        if amount:\n            assert r.tradable and cash+1e-7>=amount\n            new_units=amount/(1+FEE)/r.adjusted_open\n            units+=new_units;cash-=amount;spent+=amount;purchaseflows.append((date,-amount))\n            trades.append({'strategy':label,'date':date,'signal_date':schedule[date].signal_date if threshold else pd.NaT,\n                           'signal_ratio':schedule[date].ratio if threshold else np.nan,'amount_including_fee':amount,\n                           'adjusted_open':r.adjusted_open,'normalized_units':new_units,\n                           'buy_fee':amount-amount/(1+FEE)})\n        nav=cash+units*r.adjusted_close\n        if nav_before+inflow>0:twr*=nav/(nav_before+inflow)\n        daily.append({'date':date,'strategy':label,'cash':cash,'fund_value':units*r.adjusted_close,\n                      'nav':nav,'contributed':contributed,'twr_index':twr})\n        assert cash>=-1e-6\n        nav_before=nav;last_date=date\n    daily=pd.DataFrame(daily).set_index('date');nav=daily.nav.iloc[-1];fund=daily.fund_value.iloc[-1]\n    mdd=(daily.twr_index/daily.twr_index.cummax()-1).min()\n    result={'strategy':label,'threshold':threshold,'ticket':ticket if threshold else DEPOSIT,'cash_rate':cash_rate,\n            'signals':len(schedule) if threshold else len(trades),'buys':len(trades),'skipped_cash':len(skips),\n            'total_contributions':contributed,'purchase_spend':spent,'ending_cash':cash,'ending_fund':fund,'ending_nav':nav,\n            'profit':nav-contributed,'total_profit_pct':(nav/contributed-1)*100,\n            'portfolio_xirr_pct':xirr(flows+[(END,nav)])*100,\n            'invested_only_xirr_pct':xirr(purchaseflows+[(END,fund)])*100 if fund else np.nan,\n            'flow_adjusted_mdd_pct':mdd*100,'mean_cash_weight_pct':(daily.cash/daily.nav).mean()*100}\n    # Independent accounting check of terminal purchased adjusted units.\n    independent=sum(t['amount_including_fee']/(1+FEE)/t['adjusted_open']*prices.adjusted_close.iloc[-1] for t in trades)\n    assert np.isclose(independent,fund)\n    assert len(trades)+len(skips)==result['signals']\n    return result,daily,pd.DataFrame(trades),pd.DataFrame(skips)\n"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

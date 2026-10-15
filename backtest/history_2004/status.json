@@ -1,0 +1,17 @@
+{
+  "status": "blocked_incomplete_no_backtest",
+  "reason": "TWSE HTTP 428; downloader stopped without retry or bypass",
+  "requested_period": "2000-2010",
+  "available_official_target": "2004-02-11 to 2010-12-31",
+  "new_margin_days": 83,
+  "new_price_days": 82,
+  "new_paired_days": 82,
+  "paired_first": "20040211",
+  "paired_last": "20040603",
+  "unpaired_margin_dates": [
+    "20040604"
+  ],
+  "prior_cache": "163 margin days in 2010; not a continuous 2004-2010 series",
+  "quality_blocker": "2010-01-04 sum of reported per-security trading units 15505330 differs from aggregate 15504733; special ETF trading-unit multipliers require verification before valuation.",
+  "backtest_results_generated": false
+}

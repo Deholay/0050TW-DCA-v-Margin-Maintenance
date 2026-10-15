@@ -1,0 +1,56 @@
+[
+  {
+    "family": "depth",
+    "gate": false,
+    "a": 0.2,
+    "h": 0.25,
+    "id": "depth_open_a0.2_h0.25",
+    "training_feasible": true,
+    "training_meets_objective": false
+  },
+  {
+    "family": "depth",
+    "gate": true,
+    "a": 0.2,
+    "h": 0.25,
+    "id": "depth_strict_a0.2_h0.25",
+    "training_feasible": true,
+    "training_meets_objective": false
+  },
+  {
+    "family": "percentile",
+    "gate": false,
+    "p0": 0.2,
+    "a": 0.2,
+    "r": 1,
+    "id": "percentile_open_p00.2_a0.2_r1",
+    "training_feasible": true,
+    "training_meets_objective": false
+  },
+  {
+    "family": "percentile",
+    "gate": true,
+    "p0": 0.2,
+    "a": 0.2,
+    "r": 1,
+    "id": "percentile_strict_p00.2_a0.2_r1",
+    "training_feasible": true,
+    "training_meets_objective": false
+  },
+  {
+    "family": "target",
+    "gate": false,
+    "h": 0.25,
+    "id": "target_open_h0.25",
+    "training_feasible": true,
+    "training_meets_objective": false
+  },
+  {
+    "family": "target",
+    "gate": true,
+    "h": 0.25,
+    "id": "target_strict_h0.25",
+    "training_feasible": true,
+    "training_meets_objective": false
+  }
+]

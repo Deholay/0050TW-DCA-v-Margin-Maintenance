@@ -1,0 +1,26 @@
+{
+  "primary_price_rows": 974,
+  "warmup_observations": 489,
+  "signal_start": "2018-01-02",
+  "overlap_rows": 1200,
+  "overlap_mean_absolute_ratio_diff_pp": 0.8892833333333332,
+  "overlap_max_absolute_ratio_diff_pp": 7.980000000000018,
+  "overlap_correlation": 0.9960138264609979,
+  "price_repair": "2021-04-06: TWSE STOCK_DAY nominal OHLC divided by 4, common neighboring Yahoo dividend-adjustment factor.",
+  "missing_price_rows_after_repair": 0,
+  "source": "https://finlab.finance/api/market/margin-maintenance-ratio",
+  "definition": "finlab margin_transactions/margin_balance/price 估算; 維持率=Σ(融資今日餘額×收盤價×1000)/(上市+上櫃融資交易金額)",
+  "parameters_optimized": false,
+  "monthly_inflow": 10000,
+  "contribution_count": 48,
+  "signal_caveat": "User-approved TWSE+TPEx proxy; not the original listed-only series. Historical source revisions and survivorship treatment cannot be independently established from the aggregate API.",
+  "costs": "Buy/sell fee 0.1425%, ETF sell tax 0.1%, zero cash yield; fractional adjusted total-return units; no minimum fee or spread.",
+  "warmup_note": "Margin-only historical observations retained for rolling features; prices needed only during the tested portfolio interval.",
+  "sha256": {
+    "period_2020_2023/raw/finlab-margin.json": "12984221f5c4bfbbea994a6234b1b9062554cebaed2c5531f9939b303849862c",
+    "period_2020_2023/raw/twse-0050-202104.json": "b3b7312329e395efd5965fcf805ee787f48862fa27f084e8fd0edf42db604dab",
+    "raw/0050-yahoo2.json": "067caebad7219ef20c7daa1b64e0a91c992e0f8510cedf90ef0090d12c037049",
+    "review_20261015/window_roundtrip.py": "a7c0eaf56dbde0344767a7c085c48256f25fee814b716543686d11ae30d6b8dc",
+    "period_2020_2023/run_study.py": "c314dfcf0f8fd0c868d2fb5ba606ea57d1f0e6bbf2266632dcd550429a786070"
+  }
+}

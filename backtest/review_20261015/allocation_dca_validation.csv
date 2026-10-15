@@ -1,0 +1,6 @@
+metric,max_absolute_daily_difference,tolerance,passed
+cash,0.0,1e-08,True
+fund,2.3283064365386963e-10,1e-08,True
+nav,2.3283064365386963e-10,1e-08,True
+contributions,0.0,1e-08,True
+twr,4.440892098500626e-16,1e-08,True

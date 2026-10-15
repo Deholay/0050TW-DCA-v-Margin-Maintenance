@@ -1,0 +1,5 @@
+START 2157 calendar dates excluding Sundays; Saturdays included
+PROGRESS 20040407 {'days': 50, 'trading': 42, 'requests': 90, 'cached': 2}
+STOP margin 20040605: request failed curl: (56) The requested URL returned error: 428
+
+END BLOCKED {'days': 98, 'trading': 82, 'requests': 181, 'cached': 2}

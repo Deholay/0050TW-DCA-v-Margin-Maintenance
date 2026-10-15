@@ -1,0 +1,26 @@
+{
+  "rules": "All monthly contributions allocated to strategy, zero core DCA.\nDCA is a separate benchmark account only. Main model is dynamic_budget tau20\nwith original mirror-window exits; no coefficient or signal changes.\nBuy-only and original full-window policies are diagnostic comparisons.\nMonthly deposits, prices, dates and fees match all previous tests.\n",
+  "main": "pure_dynamic_roundtrip",
+  "monthly_contribution": 10000,
+  "core_fraction": 0,
+  "leverage": false,
+  "parameters_changed": false,
+  "tau": 20,
+  "checks": 81,
+  "caveats": [
+    "2020–2023 uses FinLab combined TWSE+TPEx; 2023–2026 primary uses listed iStock, with a matched-calendar FinLab check.",
+    "Periods overlap in 2023 and are exploratory, not independent out-of-sample.",
+    "Adjusted total-return fractional units, buy/sell fee 0.1425%, ETF sales tax 0.1%, zero cash yield; no minimum fee or spread.",
+    "Monthly contributions enter cash; no routine purchases in the pure strategy.",
+    "Dynamic-model order counts are daily orders, not multi-day entry-cycle counts."
+  ],
+  "sha256": {
+    "pure_strategy/run_study.py": "332848f134caacb3c07a199ebc9e8b052b37f2478374c8e4659d3ded641ae0a5",
+    "dynamic_budget/model.py": "d4fbdb5aa357b471ad2adde02d6dc6583af4519c59c8b1be7f0b76e5a722a7a7",
+    "dynamic_budget/methodology.json": "f385b2b48329f9ab6f59cfb7beb92c793937866c162410c735ccad3ec5ad04b5",
+    "margin_daily.csv": "c1d3ccd35f8be891bb3afe5a508dab98a04bf9bf02008a975895603f4fbf4799",
+    "prices_reviewed.csv": "69a23b410ff170b1b315c0be309a2a5bcf44a8abbf418387ee8a976ee82aa3c8",
+    "period_2020_2023/finlab_margin.csv": "00fa362e80b5ee841139bf721046b1d951eb9aa8bd965b2254bd50572d1ee050",
+    "period_2020_2023/prices_reviewed.csv": "c036c45198d16255b5cd6a2f323f72bf0f2eec3aa54a4e7db7ef007d9a194d9a"
+  }
+}

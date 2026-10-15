@@ -1,0 +1,22 @@
+{
+  "rules": "Exploratory mathematical cash-control model; no optimized coefficients.\n\nAt close t define q10 = prior 252 observations' 10th percentile of market\nmargin-maintenance ratio m. sigma = standard deviation of prior 60 daily\nchanges; sigma_ref = median of prior 252 sigma observations (same lagged\nfeatures as the original signal). Define non-probabilistic stress\nz = max(0, (q10-m)/(sigma_ref*sqrt(20))).\nH = clip(tau*(sigma/sigma_ref)^2,5,60), lambda=(1+z^2)/H.\nWhen the ORIGINAL full buy condition is true (not just its rising edge),\nschedule B = C * (1-exp(-lambda)) at the next tradable open, where C is\nremaining tactical cash at the signal close. It spends no new monthly\ncash arriving after that close. Recompute every eligible close. A halted\nETF's pending order remains fixed until its next tradable open.\n\nThis is an invented, testable cash-depletion control law, not a fitted\nexpected-return forecast, an optimal-control solution, or probability of a\nbottom. sqrt(20) is a scale convention, not a valid asserted diffusion\nmodel. tau=20 is declared main specification; 10/40 are sensitivity checks,\nnot selection candidates. H is an e-folding time (constant z=0 consumes\n63.2% after H eligible buy days), not a deadline to finish all buying.\nHigh variance lengthens H; deeper stress raises spending intensity.\n\n80% of monthly deposits remains core DCA. No leverage or new capital.\nOriginal prices, fees, tax, adjusted-unit assumptions and TWR conventions\nare unchanged. Compare buy-only and original mirror-window sells. No new\nbuy orders during an active sell campaign. Daily buy orders finish before\nthe next close, so a sell can trigger when the old multi-day buy might\nhave ignored it; that interaction is part of this changed policy.\nTest periods are exploratory retrospective checks and overlap in 2023.\n",
+  "main_tau": 20,
+  "sensitivity_tau": [
+    10,
+    20,
+    40
+  ],
+  "parameter_search": false,
+  "return_forecast_estimated": false,
+  "causal_claim": false,
+  "data_limitations": "2020–2023 uses user-approved FinLab combined TWSE+TPEx; 2023–2026 listed iStock and a matched-calendar FinLab robustness run. No claim of independent out-of-sample validation. All previous price/cost/source-revision caveats remain.",
+  "checks": 321,
+  "source_sha256": {
+    "dynamic_budget/run_study.py": "2aaddf1af8cf0cb6a1374ed9877e7da29ad08ccf5976c194dc4958dce3bf0ae7",
+    "dynamic_budget/model.py": "d4fbdb5aa357b471ad2adde02d6dc6583af4519c59c8b1be7f0b76e5a722a7a7",
+    "margin_daily.csv": "c1d3ccd35f8be891bb3afe5a508dab98a04bf9bf02008a975895603f4fbf4799",
+    "prices_reviewed.csv": "69a23b410ff170b1b315c0be309a2a5bcf44a8abbf418387ee8a976ee82aa3c8",
+    "period_2020_2023/finlab_margin.csv": "00fa362e80b5ee841139bf721046b1d951eb9aa8bd965b2254bd50572d1ee050",
+    "period_2020_2023/prices_reviewed.csv": "c036c45198d16255b5cd6a2f323f72bf0f2eec3aa54a4e7db7ef007d9a194d9a"
+  }
+}

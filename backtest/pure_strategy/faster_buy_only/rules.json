@@ -1,0 +1,29 @@
+{
+  "description": "User-requested more generous cash deployment, pure strategy, never sell.\nKeep original buy eligibility, stress z and lagged volatility horizon H.\nSpend fraction = 1 - exp(-kappa * (1+z^2)/H).\nDeclare kappa=2 as new main specification before comparing outcomes;\n1 baseline, 1.5 and 3 sensitivities. Not a fitted optimal parameter.\nUnlike reducing tau before clipping H, kappa acts AFTER the 5..60 clipping.\nAt kappa2, spend fraction is 2*f-f^2, not exactly twice the dollar order.\nAll other cashflows, execution, data and cost assumptions are unchanged.\n",
+  "main_kappa": 2.0,
+  "kappa_comparisons": [
+    1,
+    1.5,
+    2,
+    3
+  ],
+  "monthly_deposit": 10000,
+  "core_fraction": 0,
+  "exits_enabled": false,
+  "leverage": false,
+  "entry_filter_changed": false,
+  "checks": 51,
+  "caveats": [
+    "Exploratory historical comparison, not a fitted optimum or independent out-of-sample test.",
+    "2020–2023 FinLab combined TWSE+TPEx; 2023–2026 listed iStock plus matched-calendar FinLab robustness. Periods overlap in 2023.",
+    "Fractional adjusted total-return units, fee 0.1425%, no cash interest, no minimum fee or spread."
+  ],
+  "sha256": {
+    "pure_strategy/faster_buy_only/run.py": "a4740e5b1f457cc12e994b544b95487a007bb9df5bd0723fc37db6b9324782fd",
+    "dynamic_budget/model.py": "d4fbdb5aa357b471ad2adde02d6dc6583af4519c59c8b1be7f0b76e5a722a7a7",
+    "prices_reviewed.csv": "69a23b410ff170b1b315c0be309a2a5bcf44a8abbf418387ee8a976ee82aa3c8",
+    "margin_daily.csv": "c1d3ccd35f8be891bb3afe5a508dab98a04bf9bf02008a975895603f4fbf4799",
+    "period_2020_2023/prices_reviewed.csv": "c036c45198d16255b5cd6a2f323f72bf0f2eec3aa54a4e7db7ef007d9a194d9a",
+    "period_2020_2023/finlab_margin.csv": "00fa362e80b5ee841139bf721046b1d951eb9aa8bd965b2254bd50572d1ee050"
+  }
+}
